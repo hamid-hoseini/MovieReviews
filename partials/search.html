@@ -1,0 +1,22 @@
+<div>
+    <h1><span>{{message}}</span></h1>
+    <div>
+        <input type="text" ng-model="input_search" ng-keydown="getMovie($event)"/>
+
+    </div>
+    <div id="container" ng-repeat="movie in movies">
+
+        <div class="img">
+            <div class="summary">
+                Id: {{movie.id}} <br/>
+                Release Date : {{movie.release_date}} <br/>
+                Original Title: {{movie.original_title}} <br/>
+            </div>
+            <!--<div>{{movie.title}}</div>-->
+            <a href="#/search/{{movie.id}}" target="_blank">
+                <img ng-src="http://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="" width ="200" height="300"/>
+            </a>
+        </div>
+    </div>
+
+</div>

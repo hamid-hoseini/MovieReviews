@@ -1,0 +1,43 @@
+<div >
+    <div class="container">
+        <div class="image">
+            <img ng-src="http://image.tmdb.org/t/p/w500{{movies.poster_path}}" alt="" width ="300" height="400"/>
+        </div>
+        <div class="detail">
+            <div>Homepage: {{movies.homepage}}</div><br/>
+            <div>Original Title : {{movies.original_title}}</div><br/>
+            <div>Spoken Languages : {{movies.spoken_languages[0].name}}</div><br/>
+            <div>Status : {{movies.status}}</div><br/>
+            <div>Budget : {{movies.budget}}</div><br/>
+            <div>Vote Count : {{movies.vote_count}}</div><br/>
+        </div>
+        <div class="overview"><strong>overview : </strong><br/> {{movies.overview}}</div>
+        <!--<div>{{movies.genres["name"]}}</div>-->
+
+
+        <div id="reviewForm" ng-controller="MovieReviewCtrl" >
+            <form name="review" method="post">
+                <div id="inpwrap">
+                    <input id="email" type="text" name="email" ng-model="email" placeholder="Email address ..."/>
+                    <span>{{email}}</span>
+                </div>
+                <textarea id="revArea" name="review" ng-model="reviewx"></textarea>
+                <span>{{reviewx}}</span>
+                <div id="btnwrap">
+                    <button ng-click="saveReview($event)" id="submit">Submit Review</button>
+                </div>
+            </form>
+
+        <div id="reviewlist" ng-repeat="review in reviewslist ">
+            <div id="reviews">
+            Email: {{review.email}} <br/>
+            Review: {{review.review}}
+            </div>
+        </div>
+        </div>
+    </div>
+    <h1><span>{{message}}</span></h1>
+    <!--{{ movies | json }}-->
+
+
+</div>

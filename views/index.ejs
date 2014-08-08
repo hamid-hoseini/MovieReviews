@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html ng-app="tmdbApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="/css/base.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <script src="/angular/angular.js"></script>
+    <script src="/angular-route/angular-route.js"></script>
+    <script src="/js/configuration.js"></script>
+    <script>
+        var myApp= angular.module('tmdbApp',['ngRoute','movieControllers']);
+        myApp.config(['$routeProvider',function($routeProvider){
+            $routeProvider.when('/search',{
+                templateUrl :'/search.html',
+                controller : 'MovieSearchCtrl'
+            }).when('/search/:id',{
+                templateUrl :'/details.html',
+                controller : 'MovieDetailCtrl'
+            }).otherwise({
+                redirectTo : '/search'
+            });
+        }]);
+    </script>
+    <script>
+
+        var movieControllers = angular.module('movieControllers',[]);
+        movieControllers.controller('MovieSearchCtrl', function ($scope,$http) {
+            //$scope.movies= data;
+            // define a search property on the model
+            $scope.search='';
+            $scope.message='Movie List';
+            $scope.input_search='';
+            $scope.getMovie=function(event){
+                if (event.keyCode===13){
+                    console.log($scope.input_search);
+                    $http.get('http://api.themoviedb.org/3/search/movie?api_key='+api_key+'&query='+ $scope.input_search).success(function (data) {
+                        console.log(data);
+                        $scope.movies=data.results;
+                    });
+                }
+            };
+            console.log(api_key);
+
+        });
+        movieControllers.controller('MovieDetailCtrl',function ($scope,$http,$routeParams) {
+            $http.get('http://api.themoviedb.org/3/movie/' + $routeParams.id + '?api_key=' + api_key).success(function (data) {
+                console.log(data);
+                $scope.movies = data;
+            });
+        });
+        movieControllers.controller('MovieReviewCtrl', ['$scope','$http','$routeParams','$window',function($scope, $http,$routeParams, $window){
+
+            $scope.email = "";
+            $scope.reviewx = "";
+            $scope.id = 10;
+
+            $scope.movieid = Number($routeParams.id);
+
+            $scope.saveReview = function(event){
+                event.preventDefault();
+
+                console.log($scope.email);
+                console.log($scope.reviewx);
+                console.log($scope.movieid);
+
+                var obj = {
+                    email: $scope.email,
+                    review: $scope.reviewx,
+                    movieid: $scope.movieid
+                };
+
+                console.log(obj);
+
+                var url = 'http://localhost:3000/review';
+
+                console.log(url);
+
+                $http.post(url, obj).success(function (data){
+                    console.log(data);
+                }).error(function(){
+                    $window.location.href =  "#movie_disp";
+                });
+
+
+            }
+            // ---  show review list ---
+            var url1 = 'http://localhost:3000/review/'+$scope.movieid ;
+            $http.get(url1).success(function (data) {
+                console.log(data);
+                $scope.reviewslist = data;
+            }).error(function () {
+                $window.location.href = "#movie_disp";
+            });
+            // ---  show review list ---
+        }]);
+
+    </script>
+</head>
+<body>
+<div ng-view>
+</div>
+</body>
+</html>

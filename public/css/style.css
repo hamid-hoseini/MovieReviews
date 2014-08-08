@@ -1,0 +1,54 @@
+div.img{
+    position: relative;
+    margin: 30px;
+    width:200px;
+    height: 300px;
+    padding: 0;
+    float: left;
+    box-shadow: 3px 3px 5px #888888;
+}
+div.summary{
+    position: absolute;
+    bottom: 0;
+    color: transparent;
+    padding: 1em;
+    margin: 0;
+    background-color: transparent;
+    display: block;
+
+}
+div.img:hover > div.summary{
+    /*display: block;*/
+    /*transition-property : color, background-color;
+    transition-duration : 500ms;
+    transition-delay: 500ms;*/
+    color: white;
+    background-color: rgba(0,0,0, 0.50);
+    -moz-transition : all 500ms ease;
+}
+div.container{
+    margin: 0 auto;
+    width :60%;
+    background-color: #eeeeee;
+    padding: 1em;
+}
+div.image{
+    float:left;
+    margin-right: 1em;
+}
+div.detail{
+    /*border: 1px solid #fff;*/
+    margin: 1em ;
+
+}
+div.overview{
+    clear: both;
+}
+div#reviews{
+    border: 1px solid cornsilk;
+    margin-top : 1em ;
+    padding: .5em;
+    background-color: cornsilk;
+    border-radius: .25em;
+    box-shadow: 5px 5px 5px #888888;
+}
